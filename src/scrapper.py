@@ -23,9 +23,11 @@ class Weather:
             if weather_block:
                 temperature = weather_block.find("div", class_="now-weather").text.strip()
                 description = weather_block.find("div", class_="now-desc").text.strip()
+                wind = weather_block.find("div", class_="item-information").text.strip()
                 return {
                     "temperature": temperature,
-                    "description": description
+                    "description": description,
+                    "wind": wind
                 }
             else:
                 return None
