@@ -24,6 +24,7 @@ def start(message):
         bot.send_message(message.from_user.id, "Момент, домовляюсь з небесною канцелярією..")
         weather = Weather().get_weather()
         content = (
+            f"<b>Шо маємо на сьогодні:</b> \n"
             f"Температура: {weather['temperature']} \n"
             f"В цілому: {weather['description']} \n"
             f"Шо по вітру: {weather['wind']}"
@@ -31,7 +32,8 @@ def start(message):
         if weather:
             bot.send_message(
                 message.from_user.id,
-                content
+                content,
+                parse_mode='HTML'
             )
         else:
             bot.send_message(message.from_user.id, "На жаль, не вдалося отримати інформацію про погоду")
