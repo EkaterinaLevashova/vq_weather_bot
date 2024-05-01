@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 import telebot
 
+from src.scrapper import Weather
+
 load_dotenv()
 
 api_key = os.getenv("API_KEY")
@@ -12,6 +14,15 @@ bot = telebot.TeleBot(api_key)
 def start(message):
     if message.text == '/weather':
         bot.send_message(message.from_user.id, "Момент, домовляюсь з небесною канцелярією..")
+        weather = Weather().get_weather()
+        content = f"Температура: {weather['temperature']} \nВ цілому: {weather['description']}" if weather else "На жаль, не вдалося отримати інформацію про погоду"
+        if weather:
+            bot.send_message(
+                message.from_user.id,
+                content
+            )
+        else:
+            bot.send_message(message.from_user.id, "На жаль, не вдалося отримати інформацію про погоду")
     else:
         bot.send_message(message.from_user.id, 'Тяпни /weather')
 
